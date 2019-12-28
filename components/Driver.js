@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image, View, StyleSheet } from 'react-native'
+import { Image, StyleSheet } from 'react-native'
 import MapView from 'react-native-maps'
 
 export default class Driver extends Component {
