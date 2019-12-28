@@ -9,6 +9,7 @@ import * as Permissions from 'expo-permissions'
 
 // components
 import DestinationButton from '../../components/destinationButton'
+import CurrentLocationButton from '../../components/currentLocationButton'
 
 
 export default class MapViewScreen extends Component {
@@ -33,7 +34,6 @@ export default class MapViewScreen extends Component {
       const {status} = await Permissions.askAsync(Permissions.LOCATION)
         if(status !== 'granted')
           console.log('Permission to access location was denied.')
-      
       let location = await Location.getCurrentPositionAsync({enabledHighAccuracy: true})
       console.log(location)
       let region = {
@@ -42,23 +42,28 @@ export default class MapViewScreen extends Component {
         latitudeDelta: 0.045,
         longitudeDelta: 0.045
       }
-
       console.log('latitude is ' + location.coords.latitude.toString())
-       console.log('longitude is ' + location.coords.longitude.toString())
+      console.log('longitude is ' + location.coords.longitude.toString())
       this.setState({region: region})
-        
+    }
+
+    centerMap(){
+      const {latitude, longitude, latitudeDelta, longitudeDelta} = this.state.region
+      this.map.animateToRegion({ latitude, longitude, latitudeDelta, longitudeDelta })
     }
   
     render () {
       return (
         <View style={styles.container}>
           <DestinationButton />
+          <CurrentLocationButton cb={() => {this.centerMap()}} />
           <MapView
             style={styles.mapView}
             initialRegion={this.state.region}
             showsUserLocation={true}
             showsCompass={true}
             rotateEnabled={false}
+            ref={(map) => {this.map = map}}
             styles={{...StyleSheet.absoluteFillObject}}
           />
         </View>
