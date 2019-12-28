@@ -10,6 +10,7 @@ import * as Permissions from 'expo-permissions'
 // components
 import DestinationButton from '../../components/destinationButton'
 import CurrentLocationButton from '../../components/currentLocationButton'
+import Driver from '../../components/Driver'
 
 
 export default class MapViewScreen extends Component {
@@ -65,7 +66,9 @@ export default class MapViewScreen extends Component {
             rotateEnabled={false}
             ref={(map) => {this.map = map}}
             styles={{...StyleSheet.absoluteFillObject}}
-          />
+          >
+          <Driver driver={{uid: 'null', location: {latitude: 9.868806, longitude: -84.064265} }} />
+          </MapView>
         </View>
       )
     }
